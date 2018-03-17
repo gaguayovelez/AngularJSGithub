@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class UsersService {
   users = 'https://api.github.com/users';
-  token = 'f286f0a104630016fa385a88b0613af7d676e1bf';
+  token = '319a2d7afd591b684cbc3efb2e4a9c56a6d25407';
 
   constructor(private http: HttpClient) { }
 

@@ -7,16 +7,20 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UsersService } from './users/users.service';
 import { UserCardComponent } from './user-card/user-card.component';
+import { ReposComponent } from './repos/repos.component';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    UserCardComponent
+    UserCardComponent,
+    ReposComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    AppRoutingModule,
     NgbModule.forRoot()
   ],
   providers: [
