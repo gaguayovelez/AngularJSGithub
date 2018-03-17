@@ -7,7 +7,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers() {
-    return this.http.get(this.users);
+  getUsers(since) {
+    return this.http.get(`${this.users}?since=${since}`);
   }
 }
