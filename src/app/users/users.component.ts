@@ -13,6 +13,7 @@ import * as _ from 'underscore';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   since: 0;
+  isLoadingMore = false;
 
   constructor(private usersService: UsersService) { }
 
@@ -21,9 +22,12 @@ export class UsersComponent implements OnInit {
   }
 
   loadUsers() {
+    this.isLoadingMore = true;
+
     this.usersService.getUsers(this.since).subscribe(users => {
       this.users = this.users.concat(users as User[]);
       this.since = (_.max(this.users, ({id}) => id) || {id: 0}).id;
+      this.isLoadingMore = false;
     });
   }
 }
