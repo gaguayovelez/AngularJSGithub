@@ -23,10 +23,11 @@ export class UsersComponent implements OnInit {
 
   loadUsers() {
     this.isLoadingMore = true;
+    this.since = this.since || 0;
 
     this.usersService.getUsers(this.since).subscribe(users => {
       this.users = this.users.concat(users as User[]);
-      this.since = (_.max(this.users, ({id}) => id) || {id: 0}).id;
+      this.since = (_.max(this.users, ({id}) => id) || {id: 0}).id || 0;
       this.isLoadingMore = false;
     });
   }
