@@ -11,4 +11,8 @@ export class UsersService {
   getUsers(since) {
     return this.http.get(`${this.users}?since=${since}&access_token=${this.token}`);
   }
+
+  getUser(username) {
+    return this.http.get(`${this.users}/${username}`);
+  }
 }
