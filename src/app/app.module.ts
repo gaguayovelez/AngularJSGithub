@@ -9,13 +9,16 @@ import { UsersService } from './users/users.service';
 import { UserCardComponent } from './user-card/user-card.component';
 import { ReposComponent } from './repos/repos.component';
 import { AppRoutingModule } from './app.routing.module';
+import { RepoCardComponent } from './repo-card/repo-card.component';
+import { ReposService } from './repos/repos.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     UserCardComponent,
-    ReposComponent
+    ReposComponent,
+    RepoCardComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { AppRoutingModule } from './app.routing.module';
     NgbModule.forRoot()
   ],
   providers: [
-    UsersService
+    UsersService,
+    ReposService
   ],
   bootstrap: [AppComponent]
 })
