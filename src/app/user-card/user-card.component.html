@@ -1,0 +1,12 @@
+<div class="user-card">
+  <div class="profile-pic">
+    <img src="{{ user.avatar_url || './assets/default-avatar.png' }}" alt="">
+  </div>
+
+  <div class="information">
+    <h4 class="login">{{ user.login  }}</h4>
+
+    <button type="button" class="btn btn-primary">Repos</button>
+    <a href="{{ user.html_url }}" target="_blank" class="btn btn-link">@github</a>
+  </div>
+</div>
