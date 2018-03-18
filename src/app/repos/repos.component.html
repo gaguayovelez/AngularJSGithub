@@ -1,29 +1,3 @@
-<!--<div class="row">-->
-  <!--<div class="col-3">-->
-    <!--<div class="profile-image">-->
-      <!--<img src="https://avatars0.githubusercontent.com/u/1?v=4" alt="Profile Image">-->
-    <!--</div>-->
-
-    <!--<div class="user name">-->
-      <!--Tom Preston-Werner-->
-    <!--</div>-->
-
-    <!--<div class="user username">-->
-      <!--mojombo-->
-    <!--</div>-->
-
-    <!--<div class="details">-->
-      <!--<ul class="user contact information">-->
-        <!--<li class="detail"><i class="fas fa-map-marker"></i> San Francisco</li>-->
-      <!--</ul>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--<div class="col-9">-->
-
-  <!--</div>-->
-<!--</div>-->
-
 <div class="row repositories" [hidden]="!isLoading">
   <div class="repo col-lg-3 col-md-4 col-xs-6" *ngFor="let repository of repositories">
     <app-repo-card *ngIf="repository" [repo]="repository"></app-repo-card>
@@ -36,6 +10,7 @@
 </div>
 
 <ngb-pagination class="d-flex justify-content-center"
+                *ngIf="collectionSize > 10"
                 (pageChange)="onPageChange($event)"
                 [collectionSize]="collectionSize"
                 [(page)]="page"></ngb-pagination>
