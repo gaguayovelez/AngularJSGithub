@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReposService } from '../repos/repos.service';
 import { Repository } from '../repos/repository';
 import { repositoryDecorator } from '../repos/repository.decorator';
+import { UsersService } from '../users/users.service';
 
 import * as _ from 'underscore';
 import * as Masonry from 'masonry-layout';
+import { User } from '../users/user';
 
 @Component({
   selector: 'app-repos',
@@ -14,19 +16,44 @@ import * as Masonry from 'masonry-layout';
 })
 export class ReposComponent implements OnInit {
   username = '';
+  user = {};
+  collectionSize = 0;
+  page = 1;
+  itemsPerPage = 30;
+  isLoading = false;
   repositories: Repository[] = [];
 
-  constructor(private reposService: ReposService, private activatedRoute: ActivatedRoute) { }
+  constructor(private reposService: ReposService,
+              private usersService: UsersService,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.route.params.subscribe(params => {
       this.username = params['username'];
-      this.loadRepositories();
+      this.loadUserInformation();
     });
   }
 
-  loadRepositories() {
-    this.reposService.getRepos(this.username).subscribe(repos => {
+  loadUserInformation() {
+    this.usersService.getUser(this.username).subscribe(user => {
+      this.user = user as User;
+      this.collectionSize = Math.ceil((user['public_repos'] || 0) / this.itemsPerPage) * 10;
+      this.route.queryParams.subscribe(queryParams => {
+        this.page = (+queryParams['page'] || 1);
+        this.loadRepositories(this.page);
+      });
+    });
+  }
+
+  onPageChange(page) {
+    this.router.navigate(['users', this.username], { queryParams: { page } });
+  }
+
+  loadRepositories(page) {
+    this.isLoading = false;
+    this.reposService.getRepos(this.username, page).subscribe(repos => {
+      this.isLoading = true;
       this.repositories = (repos as Repository[]).map(repo => _.extend(repo, repositoryDecorator));
 
       setTimeout(() => {

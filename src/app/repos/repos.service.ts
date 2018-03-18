@@ -8,8 +8,8 @@ export class ReposService {
 
   constructor(private http: HttpClient) { }
 
-  getRepos(username) {
-    const url = `${this.users}/${username}/repos?&access_token=${this.token}`;
+  getRepos(username, page) {
+    const url = `${this.users}/${username}/repos?page=${page}&access_token=${this.token}`;
     return this.http.get(url);
   }
 }
