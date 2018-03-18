@@ -17,13 +17,27 @@ export class RepoCardComponent implements OnInit {
   ngOnInit() {
     const owner = this.repo['owner']['login'];
     const repo = this.repo['name'];
-    this.reposService.getIssues(owner, repo).subscribe(({data}) => {
-      const {repository: {total: {totalCount: totalIssues}}} = data;
-      const {repository: {open: {totalCount: openIssues}}} = data;
+    const key = `${owner}/${repo}`;
+
+    const loadIssuesInformation = (response, cacheResponse = true) => {
+      const {data: {repository: {total: {totalCount: totalIssues}}}} = response;
+      const {data: {repository: {open: {totalCount: openIssues}}}} = response;
+
+      if (cacheResponse) {
+        sessionStorage.setItem(key, JSON.stringify(response));
+      }
 
       this.totalIssues = totalIssues;
       this.openIssues = openIssues;
-    });
+    };
+
+    const storageRepo = JSON.parse(sessionStorage.getItem(key));
+
+    if (storageRepo) {
+      loadIssuesInformation(storageRepo, false);
+    } else {
+      this.reposService.getIssues(owner, repo).subscribe(loadIssuesInformation);
+    }
   }
 
 }

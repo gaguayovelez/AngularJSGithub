@@ -8,7 +8,6 @@ import { UsersService } from '../users/users.service';
 
 import * as _ from 'underscore';
 import * as Masonry from 'masonry-layout';
-import * as cache from 'js-cache';
 
 import { User } from '../users/user';
 
@@ -40,7 +39,7 @@ export class ReposComponent implements OnInit {
   }
 
   loadUserInformation() {
-    let storageUser = cache.get(this.username);
+    const storageUser = JSON.parse(sessionStorage.getItem(this.username));
     const loadInformation = (user, cacheUser = true) => {
       this.user = user as User;
       this.collectionSize = Math.ceil((user['public_repos'] || 0) / this.itemsPerPage) * 10;
@@ -49,8 +48,7 @@ export class ReposComponent implements OnInit {
         this.loadRepositories(this.page);
 
         if (cacheUser) {
-          cache.set(this.username, this.user, this.expirationTime);
-          storageUser = cache.get(this.username);
+          sessionStorage.setItem(this.username, JSON.stringify(this.user));
         }
       });
     };
