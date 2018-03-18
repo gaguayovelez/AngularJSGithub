@@ -23,7 +23,6 @@ export class ReposComponent implements OnInit {
   page = 1;
   itemsPerPage = 30;
   isLoading = false;
-  expirationTime = 60000;
   repositories: Repository[] = [];
 
   constructor(private reposService: ReposService,

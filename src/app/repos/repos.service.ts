@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { API } from '../app.api.config';
 
 @Injectable()
 export class ReposService {
-  apiV3 = 'https://api.github.com/users';
-  apiV4 = 'https://api.github.com/graphql';
-  authorization = 'Basic Z29uemFsby5hZ3VheW8udmVsZXpAZ21haWwuY29tOkFkbWluNjUw';
-  accessToken = '319a2d7afd591b684cbc3efb2e4a9c56a6d25407';
+  apiV3 = API.v3.url;
+  accessToken = API.v3.accessToken;
+
+  apiV4 = API.v4.url;
+  authorization = API.v4.authorization;
 
   constructor(private http: HttpClient) { }
 
   getRepos(username, page) {
-    const url = `${this.apiV3}/${username}/repos?page=${page}&access_token=${this.accessToken}`;
+    const url = `${this.apiV3}/users/${username}/repos?page=${page}&access_token=${this.accessToken}`;
     return this.http.get(url);
   }
 

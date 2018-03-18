@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { API } from '../app.api.config';
+
 @Injectable()
 export class UsersService {
-  users = 'https://api.github.com/users';
-  token = '319a2d7afd591b684cbc3efb2e4a9c56a6d25407';
+  users = `${API.v3.url}/users`;
+  accessToken = API.v3.accessToken;
 
   constructor(private http: HttpClient) { }
 
   getUsers(since) {
-    return this.http.get(`${this.users}?since=${since}&access_token=${this.token}`);
+    return this.http.get(`${this.users}?since=${since}&access_token=${this.accessToken}`);
   }
 
   getUser(username) {
