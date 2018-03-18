@@ -1,0 +1,18 @@
+<h1 class="my-4 text-center text-lg-left">Repos for {{ username }}</h1>
+
+<div class="row repositories" [hidden]="!isLoading">
+  <div class="repo col-lg-3 col-md-4 col-xs-6" *ngFor="let repository of repositories">
+    <app-repo-card *ngIf="repository" [repo]="repository"></app-repo-card>
+  </div>
+</div>
+
+<div class="progress" [hidden]="isLoading">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+       aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+</div>
+
+<ngb-pagination class="d-flex justify-content-center"
+                *ngIf="collectionSize > 10"
+                (pageChange)="onPageChange($event)"
+                [collectionSize]="collectionSize"
+                [(page)]="page"></ngb-pagination>
